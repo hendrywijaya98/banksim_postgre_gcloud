@@ -1,15 +1,10 @@
-## Week 5 Assignment - Banksim Artifical Data
-- database : banksim_artificial
+# Week 5 Assignment - Banksim Artifical Data
+- database (local on postgresql) : banksim_artificial
+- database (local on google cloud) : banksim_artificial, UTF8
 - user : cloud_user
 - password : 'cloud_user'
 
-- ## Week 1 Assignment - Banksim Data Cleaning
-- database : banksim_artificial
-- user : cloud_user
-- password : 'cloud_user'
-
-
-flow untuk konfigurasi di database
+### flow untuk konfigurasi di database
 - buat database
     `CREATE DATABASE banksim_artificial`
 - buat username dan password
@@ -108,3 +103,58 @@ masukan data ke database menggunakan python
 - membuat Jobs di Dataflow untuk memasukan data `bs140513` menggunakan `template postgresql to bigquery`
 - membuat Jobs di Dataflow untuk memasukan data `bsNet140513` menggunakan `template postgresql to bigquery`
 - mengaktifkan pipeline
+
+### data catalog atau meta data
+table bsNET140513_clean  
+- kolom - kolom dengan tipe data dan penjelasan:
+    - source
+        - tipe data: character varying(20)
+        - merupakan kode sumber yang sama dengan customer kalau di table bs140513_clean
+    - target
+        - tipe data: character varying(20) 
+        - merupakan kode tujuan yang sama dengan merchant kalau di table bs140513_clean
+    - weight
+        - tipe data: numeric(10,2)       
+        - bobot barang yang dikirimkan dan sama dengan amount kalau di table bs140513_clean
+    - typetrans
+        - tipe data:character varying(50)
+        - tipe transportasi yang digunakan dan sama dengan category kalau di table bs140513_clean
+    - fraud 
+        - tipe data: character varying(4)
+        - penanda kalau suatu transaksi ada fraud (`Yes`) atau tidak (`No`)
+
+table bs140513_clean
+- kolom - kolom dengan tipe data dan penjelasan:
+    - step 
+        - tipe data: integer 
+        - merupakan kolom langkah atau urutan pelanggan yang bertransaksi
+    - customer
+        - tipe data: character varying(20) 
+        - merupakan kode customer atau pelanggan, sama dengan source kalau di table bsnet140513_clean
+    - age     
+        - tipe data: integer  
+        - umur dari pelanggan
+    - gender  
+        - tipe data: character varying(10)  
+        - jenis kelamin dari pelanggan antara Male atau Female
+    - zipcodeori  
+        - tipe data: character varying(10)  
+        - merupakan kolom kode zip alamat dari customer atau pelanggan
+    - merchant    
+        - tipe data: character varying(20)  
+        - merupakan kode pedagang atau penjual, sama dengan target kalau di table bsnet140513_clean
+    - zipmerchant 
+        - tipe data: character varying(10)  
+        - merupakan kolom kode zip alamat dari merchant
+    - category    
+        - tipe data: character varying(50)  
+        - merupakan kode kategori, sama dengan typetrans kalau di table bsnet140513_clean
+    - amount    
+        - tipe data: numeric(10,2)        
+        - merupakan kode jumlah yang diduga dalah bobot barang, karena sama dengan weigh kalau di table bsnet140513_clean
+    - fraud      
+        - tipe data: character varying(4)
+        - penanda kalau suatu transaksi ada fraud (`Yes`) atau tidak (`No`)
+
+### data model
+![](https://github.com/hendrywijaya98/banksim_postgre_gcloud/blob/main/week1_banksim_data_model.png)
